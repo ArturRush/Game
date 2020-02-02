@@ -10,5 +10,6 @@ namespace GameArchitecture
 	interface IMelee
 	{
 		float MeleeDamage { get; set; }
+		float MeleeRange { get; set; }
 	}
 }

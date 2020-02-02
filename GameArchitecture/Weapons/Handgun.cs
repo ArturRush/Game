@@ -10,18 +10,19 @@ namespace GameArchitecture.Weapons
 	class Handgun : Weapon, IShoot, IThrowable
 	{
 		public float ShootDamage { get; set; }
+		public float ShootRange { get; set; }
 		public float ThrowDamage { get; set; }
 
-		public Handgun(float shootDamage, float throwDamage)
+		public Handgun(float shootDamage, float shootRange, float throwDamage)
 		{
 			ShootDamage = shootDamage;
+			ShootRange = shootRange;
 			ThrowDamage = throwDamage;
 		}
 
 		public override void Attack()
 		{
 			base.Attack();
-
 		}
 	}
 }
