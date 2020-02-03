@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 namespace GameArchitecture
 {
 	// For the weapon that can be used as a melee weapon
-	interface IMelee
+	public interface IMelee
 	{
 		float MeleeDamage { get; set; }
 		float MeleeRange { get; set; }
+
+		void AttackStart();
+		void Attack();
+		void AttackEnd();
+
 	}
 }

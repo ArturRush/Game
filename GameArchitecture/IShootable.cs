@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture
 {
-	//thing that can be shoted from IShoot weapon
-	interface IShootable
+	//thing that can be shoted from IShooter weapon
+	public interface IShootable
 	{
 		float ShootableDamage { get; set; }
 	}

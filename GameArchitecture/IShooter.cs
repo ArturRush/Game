@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GameArchitecture
 {
 	// For the weapon that can shoot
-	interface IShoot
+	public interface IShooter
 	{
 		float ShootDamage { get; set; }
 		float ShootRange { get; set; }
@@ -20,5 +20,9 @@ namespace GameArchitecture
 
 		// How many 'bullets' can be shooted at once (1 for handgun, inf for automatic riffle)
 		int FiringModeQuantity { get; set; }
+
+		void ShootStart();
+		void Shoot();
+		void ShootEnd();
 	}
 }

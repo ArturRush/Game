@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture
 {
-	public abstract class Item
+	interface IThrower
 	{
-		public String Name;
-		public String Description;
+		float ThrowDamage { get; set; }
+		float ThrowRange { get; set; }
 	}
 }

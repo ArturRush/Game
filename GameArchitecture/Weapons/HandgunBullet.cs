@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameArchitecture.Weapons.GunShells
+namespace GameArchitecture.Weapons
 {
 	// gun bullet - can be shooted
 	class HandgunBullet : IShootable
