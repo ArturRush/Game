@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameArchitecture.Weapons
+namespace GameArchitecture.Weapons.GunShells
 {
 	// gun bullet - can be shooted
-	class HandgubBullet : GunShell, IShootable
+	class HandgunBullet : IShootable
 	{
 		public float ShootableDamage { get; set; }
 
-		public HandgubBullet(float shootableDamage)
+		public HandgunBullet(float shootableDamage)
 		{
 			ShootableDamage = shootableDamage;
 		}

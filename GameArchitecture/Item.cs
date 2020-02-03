@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture
 {
-	abstract class Weapon
+	abstract class Item
 	{
-		public float WeaponDamage;
-
-		public virtual void Attack()
-		{
-			
-		}
+		public String Name;
+		public String Description;
 	}
 }
