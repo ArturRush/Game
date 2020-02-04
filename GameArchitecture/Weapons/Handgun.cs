@@ -3,48 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameArchitecture.Weapons.Bullets;
 
 namespace GameArchitecture.Weapons
 {
-	public class Handgun: Item, IShooter, IThrowable, IMelee
+	public abstract class Handgun : INamable, IShooter, IThrowable, IMelee
 	{
-		private int firingModeQuantity = 1;
-		public int FiringModeQuantity
+		public string Name { get; protected set; }
+		public string Description { get; protected set; }
+		public int FiringModeQuantity { get; protected set; }
+		public float ShootDamage { get; protected set; }
+		public float ShootRange { get; protected set; }
+		public float ReloadTime { get; protected set; }
+		public GunClip Clip { get; protected set; }
+		public float ThrowDamage { get; protected set; }
+		public float MeleeDamage { get; protected set; }
+		public float MeleeRange { get; protected set; }
+
+		public virtual void ShootStart()
 		{
-			get => firingModeQuantity;
-			set => firingModeQuantity = 1;
+			Shoot();
 		}
 
-		public float ShootDamage { get; set; }
-		public float ShootRange { get; set; }
-		public float ReloadTime { get; set; }
-		public float ClipSize { get; set; }
-		public float ThrowDamage { get; set; }
-		public float MeleeDamage { get; set; }
-		public float MeleeRange { get; set; }
-
-		public void ShootStart()
+		public virtual bool Shoot()
 		{
-
+			return Clip.Shoot();
 		}
 
-		public void Shoot()
-		{
-		}
-
-		public void ShootEnd()
+		public virtual void ShootEnd()
 		{
 		}
 
-		public void AttackStart()
+		public void Reload(GunClip clip)
+		{
+			TakeOutClip();
+			PutClip(clip);
+		}
+
+		private void TakeOutClip()
+		{
+			Clip = null;
+		}
+
+		private void PutClip(GunClip clip)
+		{
+			Clip = clip;
+		}
+
+		public virtual void AttackStart()
 		{
 		}
 
-		public void Attack()
+		public virtual void Attack()
 		{
 		}
 
-		public void AttackEnd()
+		public virtual void AttackEnd()
 		{
 		}
 	}

@@ -9,8 +9,8 @@ namespace GameArchitecture
 	// For the weapon that can be used as a melee weapon
 	public interface IMelee
 	{
-		float MeleeDamage { get; set; }
-		float MeleeRange { get; set; }
+		float MeleeDamage { get;  }
+		float MeleeRange { get;  }
 
 		void AttackStart();
 		void Attack();

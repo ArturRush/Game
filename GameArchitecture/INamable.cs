@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture
 {
-	public abstract class Item
+	public interface INamable
 	{
-		public String Name;
-		public String Description;
+		String Name { get; }
+		String Description { get; }
+
+		//TODO приведение к строке
 	}
 }

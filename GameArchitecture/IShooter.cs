@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameArchitecture.Weapons;
 
 namespace GameArchitecture
 {
-	// For the weapon that can shoot
+	/// <summary>
+	/// For the things that can shoot.
+	/// First implement abstract class - handgun, riffle...
+	/// Then implement type of your weapon
+	/// </summary>
 	public interface IShooter
 	{
-		float ShootDamage { get; set; }
-		float ShootRange { get; set; }
-		
+		float ShootDamage { get; }
+		float ShootRange { get;  }
+
 		//Seconds
-		float ReloadTime { get; set; }
+		float ReloadTime { get; }
 
 		//Размер обоймы
-		float ClipSize { get; set; }
+		GunClip Clip { get; }
 
 		// How many 'bullets' can be shooted at once (1 for handgun, inf for automatic riffle)
-		int FiringModeQuantity { get; set; }
+		int FiringModeQuantity { get; }
 
 		void ShootStart();
-		void Shoot();
+		bool Shoot();
 		void ShootEnd();
+		void Reload(GunClip shootables);
 	}
 }

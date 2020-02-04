@@ -10,6 +10,8 @@ namespace GameArchitecture
 	{
 		static void Main(string[] args)
 		{
+			Tests.RunTest();
+			Console.ReadKey();
 		}
 	}
 }

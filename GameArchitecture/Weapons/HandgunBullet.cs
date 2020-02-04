@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 namespace GameArchitecture.Weapons
 {
 	// gun bullet - can be shooted
-	class HandgunBullet : IShootable
+	public abstract class HandgunBullet : IShootable, INamable
 	{
-		public float ShootableDamage { get; set; }
-
-		public HandgunBullet(float shootableDamage)
-		{
-			ShootableDamage = shootableDamage;
-		}
+		public string Name { get; protected set; }
+		public string Description { get; protected set; }
+		public float ShootableDamage { get; protected set; }
 	}
 }

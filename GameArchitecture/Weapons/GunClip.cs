@@ -6,35 +6,77 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture.Weapons
 {
-	public abstract class GunClip: Item, IThrowable
+	public abstract class GunClip : INamable, IThrowable
 	{
-		public float ThrowDamage { get; set; }
+		public string Name { get; protected set; }
+		public string Description { get; protected set; }
 
-		private int clipSize = 0;
-		public int ClipSize { get => clipSize; set => clipSize = value; }
+		public float ThrowDamage { get; protected set; }
 
-		public int ShootablesLeftInClip { get => clipSize - Clip.Count; }
+		public int ClipSize { get; protected set; }
 
-		public Queue<IShootable> Clip = new Queue<IShootable>();
+		public int ShootablesLeftInClip
+		{
+			get => Clip.Count;
+		}
+
+		private Queue<IShootable> clip = new Queue<IShootable>();
+
+		protected Queue<IShootable> Clip
+		{
+			get => clip;
+			set => clip = value;
+		}
+
+		/// <summary>
+		/// Create empty clip
+		/// </summary>
+		protected GunClip()
+		{
+			Clip = new Queue<IShootable>();
+		}
+
+		/// <summary>
+		/// Create and fill clip with shootables
+		/// </summary>
+		/// <param name="shootables"></param>
+		protected GunClip(List<IShootable> shootables)
+		{
+			throw new NotImplementedException("Implement this constructor for your class. In constructor check type of shootables");
+		}
 
 		/// <summary>
 		/// Put shootables to clip
 		/// </summary>
 		/// <param name="shootable">What to push to clip</param>
-		/// <param name="quantity">How much you want to push</param>
-		/// <returns></returns>
-		public virtual int ChargeClip(IShootable shootable, int quantity = 1)
+		/// <returns>How much bullets are not placed it clip</returns>
+		public virtual bool ChargeClip(IShootable shootable)
 		{
-			//If not all shootables can be placed - return quantity of not placed shootables
-			int notPuttedToClip = quantity;
-			for (int i = 0; i < quantity; ++i)
+			if (ShootablesLeftInClip < ClipSize)
 			{
-				if(Clip.Count == ClipSize)
-					break;
-				--notPuttedToClip;
-				Clip.Enqueue(shootable);
+				clip.Enqueue(shootable);
+				return true;
 			}
-			return notPuttedToClip;
+			return false;
+		}
+
+		/// <summary>
+		/// Shoot - will take one shootable from the clip
+		/// </summary>
+		/// <returns>Shooted - true, no shootables - false</returns>
+		public bool Shoot()
+		{
+			if (ShootablesLeftInClip > 0)
+			{
+				Clip.Dequeue();
+				return true;
+			}
+			return false;
+		}
+
+		public List<IShootable> GetTypesOfShootables()
+		{
+			return Clip.ToList();
 		}
 	}
 }

@@ -9,6 +9,6 @@ namespace GameArchitecture
 	//Can be thrown for attack (bomb, stone, snowball)
 	interface IThrowable
 	{
-		float ThrowDamage { get; set; }
+		float ThrowDamage { get;  }
 	}
 }

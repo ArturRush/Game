@@ -8,7 +8,7 @@ namespace GameArchitecture
 {
 	interface IThrower
 	{
-		float ThrowDamage { get; set; }
-		float ThrowRange { get; set; }
+		float ThrowDamage { get;  }
+		float ThrowRange { get;  }
 	}
 }

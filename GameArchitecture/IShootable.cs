@@ -9,6 +9,6 @@ namespace GameArchitecture
 	//thing that can be shoted from IShooter weapon
 	public interface IShootable
 	{
-		float ShootableDamage { get; set; }
+		float ShootableDamage { get; }
 	}
 }
