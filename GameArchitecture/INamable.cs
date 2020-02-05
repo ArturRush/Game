@@ -8,9 +8,7 @@ namespace GameArchitecture
 {
 	public interface INamable
 	{
-		String Name { get; }
-		String Description { get; }
-
-		//TODO приведение к строке
+		string Name { get; }
+		string Description { get; }
 	}
 }

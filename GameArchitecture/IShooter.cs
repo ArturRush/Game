@@ -27,7 +27,7 @@ namespace GameArchitecture
 		int FiringModeQuantity { get; }
 
 		void ShootStart();
-		bool Shoot();
+		IShootable Shoot();
 		void ShootEnd();
 		void Reload(GunClip shootables);
 	}

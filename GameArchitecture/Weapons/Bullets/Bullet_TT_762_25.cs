@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture.Weapons.Bullets
 {
-	public class Bullet_TT_762_25:HandgunBullet, IBullet_TT
+	public class Bullet_TT_762_25: GunBullet, IBullet_TT
 	{
 		public Bullet_TT_762_25()
 		{

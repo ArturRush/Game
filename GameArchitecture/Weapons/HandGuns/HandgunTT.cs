@@ -7,7 +7,7 @@ using GameArchitecture.Weapons.Bullets;
 
 namespace GameArchitecture.Weapons.HandGuns
 {
-	class HandgunTT : Handgun
+	class HandgunTT : GunWithClip
 	{
 		public HandgunTT(IClipTT clip)
 		{
@@ -22,53 +22,87 @@ namespace GameArchitecture.Weapons.HandGuns
 			MeleeDamage = 1;
 			MeleeRange = 1;
 		}
+
+		public override void Reload(GunClip clip)
+		{
+			if (clip is IClipTT)
+			{
+				base.Reload(clip);
+				return;
+			}
+			Console.WriteLine("This clip can not be attached to this gun");
+		}
+
+		public override void PutClip(GunClip clip)
+		{
+			if (this.Clip != null)
+			{
+				Console.WriteLine("Clip is already in the gun");
+				return;
+			}
+			if (clip is IClipTT)
+			{
+				base.PutClip(clip);
+				return;
+			}
+			Console.WriteLine("This clip can not be attached to this gun");
+		}
 	}
 
 	class HandgunTTClip : GunClip, IClipTT
 	{
 		public HandgunTTClip(HandgunTTClipSizes clipModel)
 		{
-			Name = "TT clip 8";
-			Description = "Clip for TT for 8 bullets";
+			Name = $"TT clip {(int) clipModel}";
+			Description = $"Clip for TT for {(int) clipModel} bullets";
 			ThrowDamage = 1;
 			ClipSize = (int) clipModel;
 		}
 
-		public HandgunTTClip(List<IShootable> shootables)
+		/// <summary>
+		/// Charge clip with list of shootables
+		/// </summary>
+		/// <param name="shootables"></param>
+		/// <returns>List of shootables, which was;n charged</returns>
+		public List<IShootable> ChargeClip(List<IShootable> shootables)
 		{
+			List<IShootable> notCharged = new List<IShootable>();
 			foreach (var shootable in shootables)
 			{
-				ChargeClip(shootable);
+				if(!ChargeClip(shootable))
+					notCharged.Add(shootable);
 			}
+			return notCharged;
 		}
 
+		/// <summary>
+		/// Charge one shootable to clip
+		/// </summary>
+		/// <param name="shootable"></param>
+		/// <returns>Was charged - true</returns>
 		public override bool ChargeClip(IShootable shootable)
 		{
-			try
-			{
-				var tt_bullet = (IBullet_TT) shootable;
+			if (shootable is IBullet_TT)
 				return base.ChargeClip(shootable);
-			}
-			catch
-			{
-				Console.WriteLine("Bullet of type {0} cannot be charged to clip type {1}", shootable.GetType(), this.GetType());
-				return false;
-			}
+			Console.WriteLine("Bullet of type {0} cannot be charged to clip type {1}", shootable, this);
+			return false;
 		}
 	}
 
 	class KalashClip : GunClip
 	{
-		public KalashClip(HandgunTTClipSizes clipModel)
+		public KalashClip(int bulletNum)
 		{
-			Name = "TT clip 8";
-			Description = "Clip for TT for 8 bullets";
+			Name = $"Kalash clip {bulletNum}";
+			Description = $"Clip for TT for {bulletNum} bullets";
 			ThrowDamage = 1;
-			ClipSize = (int)clipModel;
+			ClipSize = bulletNum;
 		}
 	}
 
-	public interface IClipTT{}
+	public interface IClipTT
+	{
+	}
 
 	enum HandgunTTClipSizes
 	{

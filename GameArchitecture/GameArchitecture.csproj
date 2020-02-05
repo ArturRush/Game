@@ -46,7 +46,7 @@
     <Compile Include="Tests.cs" />
     <Compile Include="Weapons\Bullets\Bullet_TT_762_25.cs" />
     <Compile Include="Weapons\GunClip.cs" />
-    <Compile Include="Weapons\Handgun.cs" />
+    <Compile Include="Weapons\GunWithClip.cs" />
     <Compile Include="IMelee.cs" />
     <Compile Include="IShootable.cs" />
     <Compile Include="INamable.cs" />
@@ -55,7 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IShooter.cs" />
-    <Compile Include="Weapons\HandgunBullet.cs" />
+    <Compile Include="Weapons\GunBullet.cs" />
     <Compile Include="Weapons\HandGuns\HandgunTT.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -57,26 +57,32 @@ namespace GameArchitecture.Weapons
 				clip.Enqueue(shootable);
 				return true;
 			}
+			Console.WriteLine("Clip is full, no more shootables can  be charged");
 			return false;
 		}
 
 		/// <summary>
 		/// Shoot - will take one shootable from the clip
 		/// </summary>
-		/// <returns>Shooted - true, no shootables - false</returns>
-		public bool Shoot()
+		/// <returns>Shootable or null</returns>
+		public IShootable Shoot()
 		{
 			if (ShootablesLeftInClip > 0)
 			{
-				Clip.Dequeue();
-				return true;
+				var shootable = Clip.Dequeue();
+				return shootable;
 			}
-			return false;
+			return null;
 		}
 
 		public List<IShootable> GetTypesOfShootables()
 		{
 			return Clip.ToList();
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }

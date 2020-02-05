@@ -7,7 +7,7 @@ using GameArchitecture.Weapons.Bullets;
 
 namespace GameArchitecture.Weapons
 {
-	public abstract class Handgun : INamable, IShooter, IThrowable, IMelee
+	public abstract class GunWithClip : INamable, IShooter, IThrowable, IMelee
 	{
 		public string Name { get; protected set; }
 		public string Description { get; protected set; }
@@ -15,6 +15,7 @@ namespace GameArchitecture.Weapons
 		public float ShootDamage { get; protected set; }
 		public float ShootRange { get; protected set; }
 		public float ReloadTime { get; protected set; }
+		//TODO limit access to Clip from Gun
 		public GunClip Clip { get; protected set; }
 		public float ThrowDamage { get; protected set; }
 		public float MeleeDamage { get; protected set; }
@@ -25,8 +26,10 @@ namespace GameArchitecture.Weapons
 			Shoot();
 		}
 
-		public virtual bool Shoot()
+		public virtual IShootable Shoot()
 		{
+			if (Clip == null)
+				return null;
 			return Clip.Shoot();
 		}
 
@@ -34,18 +37,20 @@ namespace GameArchitecture.Weapons
 		{
 		}
 
-		public void Reload(GunClip clip)
+		public virtual void Reload(GunClip clip)
 		{
 			TakeOutClip();
 			PutClip(clip);
 		}
 
-		private void TakeOutClip()
+		public virtual GunClip TakeOutClip()
 		{
+			var res = Clip;
 			Clip = null;
+			return res;
 		}
 
-		private void PutClip(GunClip clip)
+		public virtual void PutClip(GunClip clip)
 		{
 			Clip = clip;
 		}
@@ -60,6 +65,39 @@ namespace GameArchitecture.Weapons
 
 		public virtual void AttackEnd()
 		{
+		}
+
+		public virtual int BulletsLeft()
+		{
+			if (Clip == null) return 0;
+			return Clip.ShootablesLeftInClip;
+		}
+
+		public virtual string ClipName()
+		{
+			if (Clip == null) return "No clip in gun";
+			return Clip.Name;
+		}
+
+		public virtual string ClipDescription()
+		{
+			if (Clip == null) return "No clip in gun";
+			return Clip.Description;
+		}
+
+		public virtual List<string> GetShootablesInClip()
+		{
+			var res = new List<string>();
+
+			if (Clip == null) return res;
+			res = Clip.GetTypesOfShootables().Select(x=>x.ToString()).ToList();
+
+			return res;
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }
