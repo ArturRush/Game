@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture.Weapons
 {
-	public abstract class GunClip : INamable, IThrowable
+	//TODO implement IThrowable
+	public class GunClip : INamable//, IThrowable
 	{
 		public string Name { get; protected set; }
 		public string Description { get; protected set; }
-
-		public float ThrowDamage { get; protected set; }
-
 		public int ClipSize { get; protected set; }
+		public List<string> CompatibleBullets = new List<string>();
 
 		public int ShootablesLeftInClip
 		{
@@ -28,21 +27,12 @@ namespace GameArchitecture.Weapons
 			set => clip = value;
 		}
 
-		/// <summary>
-		/// Create empty clip
-		/// </summary>
-		protected GunClip()
+		public GunClip(string name, string description, int clipSize, List<string> compatibleBullets)
 		{
-			Clip = new Queue<IShootable>();
-		}
-
-		/// <summary>
-		/// Create and fill clip with shootables
-		/// </summary>
-		/// <param name="shootables"></param>
-		protected GunClip(List<IShootable> shootables)
-		{
-			throw new NotImplementedException("Implement this constructor for your class. In constructor check type of shootables");
+			Name = name;
+			Description = description;
+			ClipSize = clipSize;
+			CompatibleBullets = compatibleBullets;
 		}
 
 		/// <summary>
@@ -50,15 +40,31 @@ namespace GameArchitecture.Weapons
 		/// </summary>
 		/// <param name="shootable">What to push to clip</param>
 		/// <returns>How much bullets are not placed it clip</returns>
-		public virtual bool ChargeClip(IShootable shootable)
+		public bool ChargeClip(IShootable shootable)
 		{
-			if (ShootablesLeftInClip < ClipSize)
+			if (ShootablesLeftInClip < ClipSize && CompatibleBullets.Contains(shootable.ToString()))
 			{
 				clip.Enqueue(shootable);
 				return true;
 			}
-			Console.WriteLine("Clip is full, no more shootables can  be charged");
 			return false;
+		}
+
+
+		/// <summary>
+		/// Charge clip with list of shootables
+		/// </summary>
+		/// <param name="shootables"></param>
+		/// <returns>List of shootables, which wasn't charged</returns>
+		public List<IShootable> ChargeClip(List<IShootable> shootables)
+		{
+			List<IShootable> notCharged = new List<IShootable>();
+			foreach (var shootable in shootables)
+			{
+				if (!ChargeClip(shootable))
+					notCharged.Add(shootable);
+			}
+			return notCharged;
 		}
 
 		/// <summary>
@@ -75,9 +81,9 @@ namespace GameArchitecture.Weapons
 			return null;
 		}
 
-		public List<IShootable> GetTypesOfShootables()
+		public List<string> GetTypesOfShootables()
 		{
-			return Clip.ToList();
+			return Clip.Select(x=>x.ToString()).ToList();
 		}
 
 		public override string ToString()

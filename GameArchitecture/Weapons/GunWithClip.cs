@@ -3,94 +3,102 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GameArchitecture.Weapons.Bullets;
 
 namespace GameArchitecture.Weapons
 {
-	public abstract class GunWithClip : INamable, IShooter, IThrowable, IMelee
+	//TODO implement IThrowable and IMelee here
+	public class GunWithClip : INamable, IShooter//, IThrowable, IMelee
 	{
 		public string Name { get; protected set; }
 		public string Description { get; protected set; }
 		public int FiringModeQuantity { get; protected set; }
 		public float ShootDamage { get; protected set; }
 		public float ShootRange { get; protected set; }
-		public float ReloadTime { get; protected set; }
-		//TODO limit access to Clip from Gun
-		public GunClip Clip { get; protected set; }
-		public float ThrowDamage { get; protected set; }
-		public float MeleeDamage { get; protected set; }
-		public float MeleeRange { get; protected set; }
 
-		public virtual void ShootStart()
+		public float ReloadTime { get; protected set; }
+
+		//TODO limit access to Clip from Gun
+		private GunClip clip;
+		
+		/// <summary>
+		/// List of GunClip.Name strings which compitable with this GunWithClip
+		/// </summary>
+		public List<string> CompatibleClips = new List<string>();
+
+		public GunWithClip(string name, string description, int firingModeQuantity, float shootDamage, float shootRange,
+			float reloadTime, List<string> compatibleClips)
+		{
+			Name = name;
+			Description = description;
+			FiringModeQuantity = firingModeQuantity;
+			ShootDamage = shootDamage;
+			ShootRange = shootRange;
+			ReloadTime = reloadTime;
+			CompatibleClips = compatibleClips;
+		}
+
+		public void ShootStart()
 		{
 			Shoot();
 		}
 
-		public virtual IShootable Shoot()
+		public IShootable Shoot()
 		{
-			if (Clip == null)
+			if (clip == null)
 				return null;
-			return Clip.Shoot();
+			return clip.Shoot();
 		}
 
-		public virtual void ShootEnd()
+		public void ShootEnd()
 		{
 		}
 
-		public virtual void Reload(GunClip clip)
+		public GunClip Reload(GunClip clip)
 		{
-			TakeOutClip();
+			GunClip res = TakeOutClip();
 			PutClip(clip);
-		}
-
-		public virtual GunClip TakeOutClip()
-		{
-			var res = Clip;
-			Clip = null;
 			return res;
 		}
 
-		public virtual void PutClip(GunClip clip)
+		public GunClip TakeOutClip()
 		{
-			Clip = clip;
+			var res = clip;
+			clip = null;
+			return res;
 		}
 
-		public virtual void AttackStart()
+		public bool PutClip(GunClip clip)
 		{
+			if (!CompatibleClips.Contains(clip.ToString()))
+				return false;
+			this.clip = clip;
+			return true;
 		}
 
-		public virtual void Attack()
+		public int BulletsLeft()
 		{
+			if (clip == null) return 0;
+			return clip.ShootablesLeftInClip;
 		}
 
-		public virtual void AttackEnd()
+		public string ClipName()
 		{
+			if (clip == null) return "No clip in gun";
+			return clip.Name;
 		}
 
-		public virtual int BulletsLeft()
+		public string ClipDescription()
 		{
-			if (Clip == null) return 0;
-			return Clip.ShootablesLeftInClip;
+			if (clip == null) return "No clip in gun";
+			return clip.Description;
 		}
 
-		public virtual string ClipName()
-		{
-			if (Clip == null) return "No clip in gun";
-			return Clip.Name;
-		}
-
-		public virtual string ClipDescription()
-		{
-			if (Clip == null) return "No clip in gun";
-			return Clip.Description;
-		}
-
-		public virtual List<string> GetShootablesInClip()
+		public List<string> GetShootablesInClip()
 		{
 			var res = new List<string>();
 
-			if (Clip == null) return res;
-			res = Clip.GetTypesOfShootables().Select(x=>x.ToString()).ToList();
+			if (clip == null) return res;
+			res = clip.GetTypesOfShootables();
 
 			return res;
 		}

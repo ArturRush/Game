@@ -19,16 +19,12 @@ namespace GameArchitecture
 
 		//Seconds
 		float ReloadTime { get; }
-
-		//Размер обоймы
-		GunClip Clip { get; }
-
+		
 		// How many 'bullets' can be shooted at once (1 for handgun, inf for automatic riffle)
 		int FiringModeQuantity { get; }
 
 		void ShootStart();
 		IShootable Shoot();
 		void ShootEnd();
-		void Reload(GunClip shootables);
 	}
 }

@@ -5,8 +5,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GameArchitecture.Weapons;
-using GameArchitecture.Weapons.Bullets;
-using GameArchitecture.Weapons.HandGuns;
 
 namespace GameArchitecture
 {
@@ -14,24 +12,25 @@ namespace GameArchitecture
 	{
 		public static void RunTest()
 		{
-			List<Bullet_TT_762_25> tt =
-				new List<Bullet_TT_762_25>() {new Bullet_TT_762_25(), new Bullet_TT_762_25(), new Bullet_TT_762_25()};
-			var kalash = new KalashClip(30);
-			var ttClip = new HandgunTTClip(HandgunTTClipSizes.Clip14);
-			ttClip.ChargeClip(new List<IShootable>(tt));
-			var gun = new HandgunTT(ttClip);
-			Console.WriteLine(gun.BulletsLeft());
-			gun.Reload(kalash);
-			gun.TakeOutClip();
-			gun.PutClip(ttClip);
-			Console.WriteLine(gun.BulletsLeft());
-			Console.WriteLine(gun.ClipName());
-			Console.WriteLine(gun.Name);
-			Console.WriteLine(gun.Shoot());
-			foreach (var typesOfShootable in gun.GetShootablesInClip())
+			GunBullet b = new GunBullet("B", "fdfd", 4);
+			GunClip c = new GunClip("C10","dddd",10,new List<string>(){"A","B"});
+			GunWithClip g = new GunWithClip("G","DFDF",1,2,50,1,new List<string>(){"C8","C10"});
+
+			g.PutClip(c);
+			Console.WriteLine(g.Shoot());
+			var clip = g.TakeOutClip();
+			clip.ChargeClip(b);
+			var bullets = new List<IShootable>();
+			for (int i = 0; i < 5; i++)
 			{
-				Console.WriteLine(typesOfShootable);
+				bullets.Add(b);
 			}
+			clip.ChargeClip(bullets);
+			g.PutClip(clip);
+
+			Console.WriteLine(g.BulletsLeft());
+			Console.WriteLine(g.Shoot());
+			Console.WriteLine(g.BulletsLeft());
 		}
 	}
 }
