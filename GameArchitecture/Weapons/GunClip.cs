@@ -16,16 +16,10 @@ namespace GameArchitecture.Weapons
 
 		public int ShootablesLeftInClip
 		{
-			get => Clip.Count;
+			get => clip.Count;
 		}
 
 		private Queue<IShootable> clip = new Queue<IShootable>();
-
-		protected Queue<IShootable> Clip
-		{
-			get => clip;
-			set => clip = value;
-		}
 
 		public GunClip(string name, string description, int clipSize, List<string> compatibleBullets)
 		{
@@ -75,7 +69,7 @@ namespace GameArchitecture.Weapons
 		{
 			if (ShootablesLeftInClip > 0)
 			{
-				var shootable = Clip.Dequeue();
+				var shootable = clip.Dequeue();
 				return shootable;
 			}
 			return null;
@@ -83,7 +77,7 @@ namespace GameArchitecture.Weapons
 
 		public List<string> GetTypesOfShootables()
 		{
-			return Clip.Select(x=>x.ToString()).ToList();
+			return clip.Select(x=>x.ToString()).ToList();
 		}
 
 		public override string ToString()
