@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GameArchitecture.Weapons
 {
 	//TODO implement IThrowable and IMelee here
-	public class GunWithClip : INamable, IShooter//, IThrowable, IMelee
+	public class GunWithClip : INamable, IShooter //, IThrowable, IMelee
 	{
 		public string Name { get; protected set; }
 		public string Description { get; protected set; }
@@ -25,7 +25,7 @@ namespace GameArchitecture.Weapons
 
 		//TODO limit access to Clip from Gun
 		private GunClip clip;
-		
+
 		/// <summary>
 		/// List of GunClip.Name strings which compitable with this GunWithClip
 		/// </summary>
@@ -51,8 +51,9 @@ namespace GameArchitecture.Weapons
 
 		public IShootable Shoot()
 		{
-			OnShoot?.Invoke();
-			return clip?.Shoot();
+			var res = clip?.Shoot();
+			if (res != null) OnShoot?.Invoke();
+			return res;
 		}
 
 		public void ShootEnd()

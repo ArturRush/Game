@@ -69,7 +69,7 @@ namespace GameArchitecture.Weapons
 		/// <returns>Shootable or null</returns>
 		public IShootable Shoot()
 		{
-			// If there are <2 bullets (1 or 0) then after shoot there will be no more bullets
+			// If there are < 2 bullets (1 or 0) then after shoot there will be no more bullets
 			if (ShootablesLeftInClip < 2) OnNoBullets?.Invoke();
 			if (ShootablesLeftInClip > 0)
 			{
