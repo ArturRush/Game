@@ -17,10 +17,9 @@ namespace GameArchitecture
 		float ShootDamage { get; }
 		float ShootRange { get;  }
 
-		//Seconds
-		float ReloadTime { get; }
-		
-		// How many 'bullets' can be shooted at once (1 for handgun, inf for automatic riffle)
+		/// <summary>
+		///  How many 'bullets' can be shooted at once (1 for handgun, inf for automatic riffle)
+		/// </summary>
 		int FiringModeQuantity { get; }
 
 		event Action OnShootStart;

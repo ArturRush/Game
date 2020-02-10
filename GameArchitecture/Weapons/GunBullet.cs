@@ -1,6 +1,8 @@
 ﻿namespace GameArchitecture.Weapons
 {
-	// gun bullet - can be shooted
+	/// <summary>
+	/// gun bullet - can be shooted
+	/// </summary>
 	public class GunBullet : IShootable, INamable
 	{
 		public string Name { get; protected set; }

@@ -10,5 +10,4 @@ Plan is to create code which is not dependent on View, so I can use it as a text
 For now Guns are good enough
 IShooter, Ishootable, INamable interfaces are done.
 GunBullet, GunClip, GunWithClip are done.
-
-Later will provide events.
+Events are provided.
