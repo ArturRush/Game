@@ -23,12 +23,12 @@ namespace GameArchitecture.Weapons
 		/// </summary>
 		public float ReloadTime { get; protected set; }
 
-		public event Action OnShootStart;
-		public event Action OnShoot;
-		public event Action OnShootEnd;
-		public event Action OnClipTakeOut;
-		public event Action OnClipPutIn;
-		public event Action<int> OnBulletNumChange;
+		public event Action<object> OnShootStart;
+		public event Action<object, IShootable> OnShoot;
+		public event Action<object> OnShootEnd;
+		public event Action<object, GunClip> OnClipTakeOut;
+		public event Action<object, bool> OnClipPutIn;
+		public event Action<object,int> OnBulletNumChange;
 		
 		//TODO limit access to Clip from Gun
 		private GunClip clip;
@@ -52,20 +52,20 @@ namespace GameArchitecture.Weapons
 
 		public void ShootStart()
 		{
-			OnShootStart?.Invoke();
+			OnShootStart?.Invoke(this);
 			Shoot();
 		}
 
 		public IShootable Shoot()
 		{
 			var res = clip?.Shoot();
-			if (res != null) OnShoot?.Invoke();
+			if (res != null) OnShoot?.Invoke(this, res);
 			return res;
 		}
 
 		public void ShootEnd()
 		{
-			OnShootEnd?.Invoke();
+			OnShootEnd?.Invoke(this);
 		}
 		
 		/// <summary>
@@ -86,8 +86,8 @@ namespace GameArchitecture.Weapons
 		/// <returns>Old clip</returns>
 		public GunClip TakeOutClip()
 		{
-			OnClipTakeOut?.Invoke();
 			var res = clip;
+			OnClipTakeOut?.Invoke(this, res);
 			clip = null;
 			return res;
 		}
@@ -99,21 +99,23 @@ namespace GameArchitecture.Weapons
 		/// <returns>Was it put successfully?</returns>
 		public bool PutClip(GunClip clip)
 		{
-			OnClipPutIn?.Invoke();
-			if (!CompatibleClips.Contains(clip.ToString()))
-				return false;
-			this.clip = clip;
-			clip.OnBulletNumChange += Clip_OnBulletNumChange;
-			return true;
+			var res = false;
+			if (CompatibleClips.Contains(clip.ToString()))
+			{
+				this.clip = clip;
+				clip.OnBulletNumChange += Clip_OnBulletNumChange;
+				res = true;
+			}
+			OnClipPutIn?.Invoke(this,res);
+			return res;
 		}
 
 		/// <summary>
 		/// Update hiw many bullets left in clip
 		/// </summary>
-		/// <param name="bulletNum"></param>
-		private void Clip_OnBulletNumChange(int bulletNum)
+		private void Clip_OnBulletNumChange(object gunClip, int bulletNum)
 		{
-			OnBulletNumChange?.Invoke(bulletNum);
+			OnBulletNumChange?.Invoke(this, bulletNum);
 		}
 
 		/// <summary>

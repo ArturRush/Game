@@ -19,11 +19,11 @@ namespace GameArchitecture.Weapons
 			get => clip.Count;
 		}
 
-		public event Action OnNoBullets;
+		public event Action<object> OnNoBullets;
 		/// <summary>
 		/// Event shows how many bullets after update
 		/// </summary>
-		public event Action<int> OnBulletNumChange;
+		public event Action<object, int> OnBulletNumChange;
 
 		private Queue<IShootable> clip = new Queue<IShootable>();
 
@@ -45,7 +45,7 @@ namespace GameArchitecture.Weapons
 			if (ShootablesLeftInClip < ClipSize && CompatibleBullets.Contains(shootable.ToString()))
 			{
 				clip.Enqueue(shootable);
-				OnBulletNumChange?.Invoke(ShootablesLeftInClip);
+				OnBulletNumChange?.Invoke(this, ShootablesLeftInClip);
 				return true;
 			}
 			return false;
@@ -69,17 +69,17 @@ namespace GameArchitecture.Weapons
 		}
 
 		/// <summary>
-		/// Shoot - will take one shootable from the clip
+		/// Shoot - will take one shootable from the clip. Can be used without gun
 		/// </summary>
 		/// <returns>Shootable or null</returns>
 		public IShootable Shoot()
 		{
 			// If there are < 2 bullets (1 or 0) then after shoot there will be no more bullets
-			if (ShootablesLeftInClip < 2) OnNoBullets?.Invoke();
+			if (ShootablesLeftInClip < 2) OnNoBullets?.Invoke(this);
 			if (ShootablesLeftInClip > 0)
 			{
 				var shootable = clip.Dequeue();
-				OnBulletNumChange?.Invoke(ShootablesLeftInClip);
+				OnBulletNumChange?.Invoke(this,ShootablesLeftInClip);
 				return shootable;
 			}
 			return null;
