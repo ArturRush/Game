@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GameArchitecture.Weapons
 {
 	//TODO implement IThrowable
-	public class GunClip : INamable//, IThrowable
+	public class GunClip : INamable //, IThrowable
 	{
 		public string Name { get; protected set; }
 		public string Description { get; protected set; }
@@ -18,6 +18,8 @@ namespace GameArchitecture.Weapons
 		{
 			get => clip.Count;
 		}
+
+		public event Action OnNoBullets;
 
 		private Queue<IShootable> clip = new Queue<IShootable>();
 
@@ -67,6 +69,8 @@ namespace GameArchitecture.Weapons
 		/// <returns>Shootable or null</returns>
 		public IShootable Shoot()
 		{
+			// If there are <2 bullets (1 or 0) then after shoot there will be no more bullets
+			if (ShootablesLeftInClip < 2) OnNoBullets?.Invoke();
 			if (ShootablesLeftInClip > 0)
 			{
 				var shootable = clip.Dequeue();
@@ -77,7 +81,7 @@ namespace GameArchitecture.Weapons
 
 		public List<string> GetTypesOfShootables()
 		{
-			return clip.Select(x=>x.ToString()).ToList();
+			return clip.Select(x => x.ToString()).ToList();
 		}
 
 		public override string ToString()

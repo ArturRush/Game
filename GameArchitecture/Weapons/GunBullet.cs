@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameArchitecture.Weapons
+﻿namespace GameArchitecture.Weapons
 {
 	// gun bullet - can be shooted
 	public class GunBullet : IShootable, INamable

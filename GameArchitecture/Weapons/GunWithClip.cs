@@ -17,6 +17,12 @@ namespace GameArchitecture.Weapons
 
 		public float ReloadTime { get; protected set; }
 
+		public event Action OnShootStart;
+		public event Action OnShoot;
+		public event Action OnShootEnd;
+		public event Action OnClipTakeOut;
+		public event Action OnClipPutIn;
+
 		//TODO limit access to Clip from Gun
 		private GunClip clip;
 		
@@ -39,18 +45,19 @@ namespace GameArchitecture.Weapons
 
 		public void ShootStart()
 		{
+			OnShootStart?.Invoke();
 			Shoot();
 		}
 
 		public IShootable Shoot()
 		{
-			if (clip == null)
-				return null;
-			return clip.Shoot();
+			OnShoot?.Invoke();
+			return clip?.Shoot();
 		}
 
 		public void ShootEnd()
 		{
+			OnShootEnd?.Invoke();
 		}
 
 		public GunClip Reload(GunClip clip)
@@ -62,6 +69,7 @@ namespace GameArchitecture.Weapons
 
 		public GunClip TakeOutClip()
 		{
+			OnClipTakeOut?.Invoke();
 			var res = clip;
 			clip = null;
 			return res;
@@ -69,6 +77,7 @@ namespace GameArchitecture.Weapons
 
 		public bool PutClip(GunClip clip)
 		{
+			OnClipPutIn?.Invoke();
 			if (!CompatibleClips.Contains(clip.ToString()))
 				return false;
 			this.clip = clip;

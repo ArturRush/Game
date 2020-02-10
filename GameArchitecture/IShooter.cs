@@ -23,6 +23,10 @@ namespace GameArchitecture
 		// How many 'bullets' can be shooted at once (1 for handgun, inf for automatic riffle)
 		int FiringModeQuantity { get; }
 
+		event Action OnShootStart;
+		event Action OnShoot;
+		event Action OnShootEnd;
+
 		void ShootStart();
 		IShootable Shoot();
 		void ShootEnd();
