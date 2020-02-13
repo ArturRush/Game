@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using GameArchitecture;
 using GameArchitecture.Weapons;
 
-namespace GameArchitecture
+namespace TestEnv
 {
-	public static class Tests
+	public static class Test
 	{
-		public static void RunTest()
+		public static void RunTests()
 		{
-			GunBullet b = new GunBullet("B", "fdfd", 4);
+			GunBullet b = new GunBullet("BULLETNAME", "fdfd", 4);
 			GunBullet bb = new GunBullet("BB", "fdfd", 4);
-			GunClip c = new GunClip("C10","dddd",10,new List<string>(){"A","B"});
-			GunWithClip g = new GunWithClip("G","DFDF",1,2,50,1,new List<string>(){"C8","C10"});
+			GunClip c = new GunClip("C10", "ddddd", 10, new List<string>() { "BULLETNAME", "B" });
+			GunWithClip g = new GunWithClip("GUNNAME", "DFDF", 1, 2, 50, 1, new List<string>() { "C8", "C10" });
 			g.OnShoot += G_OnShoot;
 
 			g.PutClip(c);
@@ -31,13 +31,16 @@ namespace GameArchitecture
 			g.PutClip(clip);
 
 			Console.WriteLine(g.BulletsLeft());
-			Console.WriteLine(g.Shoot());
+			g.Shoot();
 			Console.WriteLine(g.BulletsLeft());
+
 		}
 
-		private static void G_OnShoot()
+		private static void G_OnShoot(object gun, IShootable bullet)
 		{
-			Console.WriteLine("Something shooted");
+			Console.WriteLine(((GunWithClip)gun).Name);
+			Console.WriteLine(((GunBullet)bullet).Name);
 		}
-	}
+
+}
 }
