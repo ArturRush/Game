@@ -19,11 +19,12 @@ namespace GameArchitecture.Weapons
 			get => clip.Count;
 		}
 
-		public event Action<object> OnNoBullets;
+		public event Action<GunClip> OnNoBullets;
+
 		/// <summary>
 		/// Event shows how many bullets after update
 		/// </summary>
-		public event Action<object, int> OnBulletNumChange;
+		public event Action<GunClip, int> OnBulletNumChange;
 
 		private Queue<IShootable> clip = new Queue<IShootable>();
 

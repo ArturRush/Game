@@ -22,9 +22,9 @@ namespace GameArchitecture
 		/// </summary>
 		int FiringModeQuantity { get; }
 
-		event Action<object> OnShootStart;
-		event Action<object, IShootable> OnShoot;
-		event Action<object> OnShootEnd;
+		event Action<IShooter> OnShootStart;
+		event Action<IShooter, IShootable> OnShoot;
+		event Action<IShooter> OnShootEnd;
 
 		void ShootStart();
 		IShootable Shoot();

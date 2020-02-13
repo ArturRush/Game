@@ -36,7 +36,7 @@ namespace TestEnv
 
 		}
 
-		private static void G_OnShoot(object gun, IShootable bullet)
+		private static void G_OnShoot(IShooter gun, IShootable bullet)
 		{
 			Console.WriteLine(((GunWithClip)gun).Name);
 			Console.WriteLine(((GunBullet)bullet).Name);

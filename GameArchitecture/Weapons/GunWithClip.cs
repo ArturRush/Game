@@ -8,7 +8,7 @@ namespace GameArchitecture.Weapons
 {
 	//TODO implement IThrowable and IMelee here
 	/// <summary>
-	/// It is a gun which uses clip
+	/// It is a gun which uses gunClip
 	/// </summary>
 	public class GunWithClip : INamable, IShooter //, IThrowable, IMelee
 	{
@@ -23,15 +23,15 @@ namespace GameArchitecture.Weapons
 		/// </summary>
 		public float ReloadTime { get; protected set; }
 
-		public event Action<object> OnShootStart;
-		public event Action<object, IShootable> OnShoot;
-		public event Action<object> OnShootEnd;
-		public event Action<object, GunClip> OnClipTakeOut;
-		public event Action<object, bool> OnClipPutIn;
-		public event Action<object,int> OnBulletNumChange;
+		public event Action<IShooter> OnShootStart;
+		public event Action<IShooter, IShootable> OnShoot;
+		public event Action<IShooter> OnShootEnd;
+		public event Action<IShooter, GunClip> OnClipTakeOut;
+		public event Action<IShooter, bool> OnClipPutIn;
+		public event Action<IShooter, int> OnBulletNumChange;
 		
 		//TODO limit access to Clip from Gun
-		private GunClip clip;
+		private GunClip gunClip;
 
 		/// <summary>
 		/// List of GunClip.Name strings which compitable with this GunWithClip
@@ -58,7 +58,7 @@ namespace GameArchitecture.Weapons
 
 		public IShootable Shoot()
 		{
-			var res = clip?.Shoot();
+			var res = gunClip?.Shoot();
 			if (res != null) OnShoot?.Invoke(this, res);
 			return res;
 		}
@@ -86,9 +86,9 @@ namespace GameArchitecture.Weapons
 		/// <returns>Old clip</returns>
 		public GunClip TakeOutClip()
 		{
-			var res = clip;
+			var res = gunClip;
 			OnClipTakeOut?.Invoke(this, res);
-			clip = null;
+			gunClip = null;
 			return res;
 		}
 
@@ -102,7 +102,7 @@ namespace GameArchitecture.Weapons
 			var res = false;
 			if (CompatibleClips.Contains(clip.ToString()))
 			{
-				this.clip = clip;
+				this.gunClip = clip;
 				clip.OnBulletNumChange += Clip_OnBulletNumChange;
 				res = true;
 			}
@@ -111,9 +111,9 @@ namespace GameArchitecture.Weapons
 		}
 
 		/// <summary>
-		/// Update hiw many bullets left in clip
+		/// Update how many bullets left in clip
 		/// </summary>
-		private void Clip_OnBulletNumChange(object gunClip, int bulletNum)
+		private void Clip_OnBulletNumChange(GunClip clip, int bulletNum)
 		{
 			OnBulletNumChange?.Invoke(this, bulletNum);
 		}
@@ -124,32 +124,32 @@ namespace GameArchitecture.Weapons
 		/// <returns></returns>
 		public int BulletsLeft()
 		{
-			if (clip == null) return 0;
-			return clip.ShootablesLeftInClip;
+			if (gunClip == null) return 0;
+			return gunClip.ShootablesLeftInClip;
 		}
 
 		public string ClipName()
 		{
-			if (clip == null) return "No clip in gun";
-			return clip.Name;
+			if (gunClip == null) return "No clip in gun";
+			return gunClip.Name;
 		}
 
 		public string ClipDescription()
 		{
-			if (clip == null) return "No clip in gun";
-			return clip.Description;
+			if (gunClip == null) return "No clip in gun";
+			return gunClip.Description;
 		}
 
 		/// <summary>
-		/// Which shootables are in clip
+		/// Which shootables are in gunClip
 		/// </summary>
 		/// <returns>List of shootable names</returns>
 		public List<string> GetShootablesInClip()
 		{
 			var res = new List<string>();
 
-			if (clip == null) return res;
-			res = clip.GetTypesOfShootables();
+			if (gunClip == null) return res;
+			res = gunClip.GetTypesOfShootables();
 
 			return res;
 		}
