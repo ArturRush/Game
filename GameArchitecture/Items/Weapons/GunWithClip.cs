@@ -10,7 +10,7 @@ namespace GameArchitecture.Items.Weapons
 	/// <summary>
 	/// It is a gun which uses gunClip
 	/// </summary>
-	public class GunWithClip : INamable, IShooter //, IThrowable, IMelee
+	public class GunWithClip : INamable, IShooter, ISpecial //, IThrowable, IMelee
 	{
 		public string Name { get; protected set; }
 		public string Description { get; protected set; }
@@ -32,6 +32,7 @@ namespace GameArchitecture.Items.Weapons
 		
 		//TODO limit access to Clip from Gun
 		private GunClip gunClip;
+		private Action<object, object> specialAction;
 
 		/// <summary>
 		/// List of GunClip.Name strings which compitable with this GunWithClip
@@ -39,7 +40,7 @@ namespace GameArchitecture.Items.Weapons
 		public List<string> CompatibleClips = new List<string>();
 
 		public GunWithClip(string name, string description, int firingModeQuantity, float shootDamage, float shootRange,
-			float reloadTime, List<string> compatibleClips)
+			float reloadTime, List<string> compatibleClips, Action<object, object> specialAction)
 		{
 			Name = name;
 			Description = description;
@@ -48,6 +49,7 @@ namespace GameArchitecture.Items.Weapons
 			ShootRange = shootRange;
 			ReloadTime = reloadTime;
 			CompatibleClips = compatibleClips;
+			this.specialAction = specialAction;
 		}
 
 		public void ShootStart()
@@ -157,6 +159,11 @@ namespace GameArchitecture.Items.Weapons
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public void SpecialAction(object actor, object target)
+		{
+			specialAction(actor, target);
 		}
 	}
 }

@@ -8,6 +8,6 @@ namespace GameArchitecture.Items
 {
 	public interface ISpecial
 	{
-		void SpecialEffect(object actor, object target);
+		void SpecialAction(object actor, object target);
 	}
 }

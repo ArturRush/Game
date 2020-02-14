@@ -1,6 +1,5 @@
-Provide events to classes
-
-How I can make reload?
+Put SpecialAction to every method? - скорее всего
+How to link it to events? - никак
 
 
 Создать класс - загрузчик ресурсов - К БИБЛИОТЕКЕ НЕ ОТНОСИТСЯ
