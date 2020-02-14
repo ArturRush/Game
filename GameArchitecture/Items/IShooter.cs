@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GameArchitecture.Weapons;
 
-namespace GameArchitecture
+namespace GameArchitecture.Items
 {
 	/// <summary>
 	/// For the things that can shoot.

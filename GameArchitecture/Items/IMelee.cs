@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameArchitecture
+﻿namespace GameArchitecture.Items
 {
 	// For the weapon that can be used as a melee weapon
 	public interface IMelee

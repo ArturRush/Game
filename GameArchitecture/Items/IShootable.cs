@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameArchitecture
+namespace GameArchitecture.Items
 {
 	/// <summary>
 	/// thing that can be shoted from IShooter weapon

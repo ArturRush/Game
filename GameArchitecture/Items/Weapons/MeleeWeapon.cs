@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameArchitecture
+namespace GameArchitecture.Items.Weapons
 {
-	interface IThrower
+	class MeleeWeapon
 	{
-		float ThrowDamage { get;  }
-		float ThrowRange { get;  }
 	}
 }

@@ -43,17 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Weapons\GunClip.cs" />
-    <Compile Include="Weapons\GunWithClip.cs" />
-    <Compile Include="IMelee.cs" />
-    <Compile Include="IShootable.cs" />
-    <Compile Include="INamable.cs" />
-    <Compile Include="IThrowable.cs" />
-    <Compile Include="IThrower.cs" />
+    <Compile Include="Items\ISpecial.cs" />
+    <Compile Include="Items\Weapons\GunClip.cs" />
+    <Compile Include="Items\Weapons\GunWithClip.cs" />
+    <Compile Include="Items\IMelee.cs" />
+    <Compile Include="Items\IShootable.cs" />
+    <Compile Include="Items\INamable.cs" />
+    <Compile Include="Items\IThrowable.cs" />
+    <Compile Include="Items\IThrower.cs" />
+    <Compile Include="Items\Weapons\MeleeWeapon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IShooter.cs" />
-    <Compile Include="Weapons\GunBullet.cs" />
+    <Compile Include="Items\IShooter.cs" />
+    <Compile Include="Items\Weapons\GunBullet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

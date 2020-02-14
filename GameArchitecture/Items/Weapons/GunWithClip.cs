@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameArchitecture.Weapons
+namespace GameArchitecture.Items.Weapons
 {
 	//TODO implement IThrowable and IMelee here
 	/// <summary>

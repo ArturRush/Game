@@ -1,4 +1,6 @@
-﻿namespace GameArchitecture.Weapons
+﻿using GameArchitecture.Items;
+
+namespace GameArchitecture.Items.Weapons
 {
 	/// <summary>
 	/// gun bullet - can be shooted

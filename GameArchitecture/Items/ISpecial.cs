@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameArchitecture
+namespace GameArchitecture.Items
 {
-	public interface INamable
+	public interface ISpecial
 	{
-		string Name { get; }
-		string Description { get; }
+		void SpecialEffect(object actor, object target);
 	}
 }
