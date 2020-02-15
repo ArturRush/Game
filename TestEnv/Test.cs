@@ -15,11 +15,10 @@ namespace TestEnv
 	{
 		public static void RunTests()
 		{
-			GunBullet b = new GunBullet("BULLETNAME", "fdfd", 4, (o, o1) => { });
-			GunBullet bb = new GunBullet("BB", "fdfd", 4, (o, o1) => { });
+			GunBullet b = new GunBullet("BULLETNAME", "fdfd", 4);
+			GunBullet bb = new GunBullet("BB", "fdfd", 4);
 			GunClip c = new GunClip("C10", "ddddd", 10, new List<string>() {"BULLETNAME", "B"});
-			GunWithClip g = new GunWithClip("GUNNAME", "DFDF", 1, 2, 50, 1, new List<string>() {"C8", "C10"},
-				(o, o1) => { SpecialGunEffect(o, o1); });
+			VampireGun g = new VampireGun("GUNNAME", "DFDF", 1, 2, 50, 1, new List<string>() {"C8", "C10"});
 			g.OnShoot += G_OnShoot;
 
 			g.PutClip(c);
@@ -43,10 +42,6 @@ namespace TestEnv
 		{
 			Console.WriteLine(((GunWithClip) gun).Name);
 			Console.WriteLine(((GunBullet) bullet).Name);
-		}
-
-		private static void SpecialGunEffect(object actor, object target)
-		{
 		}
 	}
 }

@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Items\ISpecial.cs" />
     <Compile Include="Items\Weapons\GunClip.cs" />
     <Compile Include="Items\Weapons\GunWithClip.cs" />
     <Compile Include="Items\IMelee.cs" />

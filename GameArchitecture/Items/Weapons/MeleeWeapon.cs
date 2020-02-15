@@ -6,21 +6,19 @@ using System.Threading.Tasks;
 
 namespace GameArchitecture.Items.Weapons
 {
-	public class MeleeWeapon: INamable, IMelee, ISpecial
+	public class MeleeWeapon: INamable, IMelee
 	{
 		public string Name { get; }
 		public string Description { get; }
 		public float MeleeDamage { get; }
 		public float MeleeRange { get; }
-		private Action<object, object> specialAction;
 
-		public MeleeWeapon(string name, string description, float meleeDamage, float meleeRange, Action<object, object> specialAction)
+		public MeleeWeapon(string name, string description, float meleeDamage, float meleeRange)
 		{
 			Name = name;
 			Description = description;
 			MeleeDamage = meleeDamage;
 			MeleeRange = meleeRange;
-			this.specialAction = specialAction;
 		}
 
 		public void AttackStart()
@@ -36,11 +34,6 @@ namespace GameArchitecture.Items.Weapons
 		public void AttackEnd()
 		{
 			throw new NotImplementedException();
-		}
-
-		public void SpecialAction(object actor, object target)
-		{
-			specialAction(actor, target);
 		}
 	}
 }
